@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="Layout :: link-css"></th:block>
+    <title>Bookstore</title>
+</head>
+<body>
+<th:block th:replace="Layout :: header"></th:block>
+<div class="container">
+    <h1>Create book</h1>
+    <form th:action="@{/books/add}" th:object="${book}"  method="post">
+        <div class="col-6 mb-3">
+            <label class="form-label" >Title</label>
+            <input class="form-control" type="text" th:field="*{title}" id="title">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" >Author</label>
+            <input class="form-control" type="text" th:field="*{author}" id="Author">
+
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" >Price: </label>
+            <input class="form-control" type="text" th:field="*{price}" id="price">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" for="category">Category</label>
+            <select class="form-control" id="category" name="category.id">
+                <option th:each="category: ${category}"
+                        th:value="${category.id}"
+                        th:text="${category.name}">
+                </option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save">
+    </form>
+    <br>
+    <a th:href="@{/books}">back to list</a>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org//thymeleaf-extras-springsecurity">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bookstore</title>
+    <th:block th:replace="Layout :: link-css"> </th:block>
+
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<form th:action="@{/books}" method="get">
+    <input type="text" name="keyword" placeholder="Search keyword" th:value="${keyword}">
+    <button type="submit">Search</button>
+</form>
+<hr>
+<div class="container">
+    <h1 th:text="${title}"></h1>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+           <th>Category</th>
+            <th sec:authorize="hasAnyAuthority('ADMIN') ">Action</th>
+        </tr>
+
+        <tr th:each="book: ${book}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.title}"> </td>
+            <td th:text="${book.author}"> </td>
+            <td th:text="${book.price}"> </td>
+         <td th:text="${book.category.name}">
+            <td sec:authorize="hasAnyAuthority('ADMIN') ">
+                <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
+                <a th:href="@{/books/delete/{id}(id=${book.id})}"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            <form th:action="@{/books/add-to-cart}" method="post" class="d-inline">
+                <input type="hidden" name="id" th:value="${book.getId()}">
+                <input type="hidden" name="name"th:value="${book.getTitle()}">
+                <input type="hidden" name="price" th:value="${book.getPrice()}">
+                <button type="submit" class="btn btn-success"
+                        onclick="return confirm('Are you sure you want to
+                add this book to cart?')">
+                    Add to cart</button>
+            </form>
+         </td>
+        </tr>
+        <tbody id="book-table-body">
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/js/jquery-3.7.0.min.js}"></script>
+
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

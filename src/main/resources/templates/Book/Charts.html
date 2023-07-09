@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <th:block th:replace="Layout :: link-css" ></th:block>
+</head>
+<body>
+<th:block th:replace="Layout :: header"></th:block>
+  <p>Tổng số đơn hàng: <span id="totalOrders"></span></p>
+
+<th:block th:replace="Layout :: footer"></th:block>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $.ajax({
+    url: '/api/orders/total',
+    type: 'GET',
+    success: function(data) {
+
+      var totalOrders = data;
+
+
+      $('#totalOrders').text(totalOrders);
+    },
+    error: function(xhr, status, error) {
+      // Xử lý lỗi nếu có
+      console.log(error);
+    }
+  });
+});
+</script>
+</body>
+</html>

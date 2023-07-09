@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="Layout :: link-css"></th:block>
+    <title>Bookstore</title>
+</head>
+<body>
+<th:block th:replace="Layout :: header"></th:block>
+<section class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <h3 class="mb-5">Sign in</h3>
+                        <form th:action="@{/login}" method="post">
+                            <fieldset>
+                                <div th:if="${param.error}" class="alert alert-danger">
+                                    Sai mật khẩu hoặc tên đăng nhập
+                                </div>
+                                <div th:if="${param.logout}" class="alert alert-success">
+                                    You have been logout
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="username">Tên Đăng Nhập</label>
+                                    <input type="text" id="username" required class="form-control form-control-lg" name="username"/>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="password">Mật khẩu</label>
+                                    <input type="password" id="password" required class="form-control form-control-lg" name="password" />
+                                </div>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+                                <hr class="my-4">
+
+                                <a class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" href="/register">
+                                    Đăng Ký
+                                </a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
